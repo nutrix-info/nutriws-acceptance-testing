@@ -14,6 +14,11 @@ public class NutrixNutrientDTO extends NutrixAbstractDTO {
     private String code;
     private String name;
     private String description;
+    
+    private Integer originFlag;
+    private String unitType;
+    private Byte numDec;
+    private Integer usnndbNo;
 
     public NutrixNutrientDTO() {
         super();
@@ -24,6 +29,15 @@ public class NutrixNutrientDTO extends NutrixAbstractDTO {
         this.code = code;
         this.name = name;
         this.description = description;
+    }
+    
+    public NutrixNutrientDTO(String code, String name, 
+            Integer originFlag, String unitType, Byte numDec, Integer usnndbNo) {
+        this(code, name, null);
+        this.originFlag = originFlag;
+        this.unitType = unitType;
+        this.numDec = numDec;
+        this.usnndbNo = usnndbNo;
     }
 
     /**
@@ -36,6 +50,12 @@ public class NutrixNutrientDTO extends NutrixAbstractDTO {
         this.id = id;
     }
 
+    public NutrixNutrientDTO(String id, String code, String name, 
+            Integer originFlag, String unitType, Byte numDec, Integer usnndbNo) {
+        this(code, name, originFlag, unitType, numDec, usnndbNo);
+        this.id = id;
+    }
+    
     public String getId() {
         return id;
     }
@@ -68,6 +88,38 @@ public class NutrixNutrientDTO extends NutrixAbstractDTO {
         this.name = name;
     }
 
+    public Integer getOriginFlag() {
+        return originFlag;
+    }
+
+    public void setOriginFlag(Integer originFlag) {
+        this.originFlag = originFlag;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
+
+    public Byte getNumDec() {
+        return numDec;
+    }
+
+    public void setNumDec(Byte numDec) {
+        this.numDec = numDec;
+    }
+
+    public Integer getUsnndbNo() {
+        return usnndbNo;
+    }
+
+    public void setUsnndbNo(Integer usnndbNo) {
+        this.usnndbNo = usnndbNo;
+    }
+    
     @XmlRootElement
     public static class Pack {
 

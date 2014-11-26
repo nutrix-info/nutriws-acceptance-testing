@@ -6,7 +6,7 @@ package net.cokkee.nutrix.accptest.steps;
  */
 public abstract class NutrixAbstractSteps {
 
-    private String serviceUrl = "http://localhost:7777/comker-app/ws/comker/api";
+    private String serviceUrl = "http://localhost:7777/nutrix-app/ws/nutrix/api";
 
     public String getServiceUrl() {
         return serviceUrl;

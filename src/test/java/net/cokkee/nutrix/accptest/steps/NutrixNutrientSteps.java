@@ -1,3 +1,7 @@
+/*
+Class Steps này, như là một diễn viên, biết cách múa may, diễn tả hành động,
+nhưng không biết lắp ghép lại, nên không thể thành vở kịch được.
+*/
 package net.cokkee.nutrix.accptest.steps;
 
 import com.jayway.restassured.RestAssured;
@@ -32,80 +36,80 @@ public class NutrixNutrientSteps extends NutrixAbstractSteps {
     public void shutdown() {
     }
 
-    private NutrixNutrientDTO roleObject = new NutrixNutrientDTO();
+    private NutrixNutrientDTO nutrientObject = new NutrixNutrientDTO();
 
     private Response response;
 
-    @Given("a role code:<code>")
-    @Alias("a role code:$code")
-    public void given_a_role_code(@Named("code") String code) {
-        roleObject.setCode(code);
+    @Given("a nutrient code:<code>")
+    @Alias("a nutrient code:$code")
+    public void given_a_nutrient_code(@Named("code") String code) {
+        nutrientObject.setCode(code);
     }
 
-    @Given("a role object with code:'<code>', name:'<name>', description:'<description>'")
-    @Alias("a role object with code:'$code', name:'$name', description:'$description'")
-    public void given_a_role_object(@Named("code") String code,
+    @Given("a nutrient object with code:'<code>', name:'<name>', description:'<description>'")
+    @Alias("a nutrient object with code:'$code', name:'$name', description:'$description'")
+    public void given_a_nutrient_object(@Named("code") String code,
             @Named("name") String name, @Named("description") String description) {
-        roleObject.setCode(code);
-        roleObject.setName(name);
-        roleObject.setDescription(description);
+        nutrientObject.setCode(code);
+        nutrientObject.setName(name);
+        nutrientObject.setDescription(description);
     }
 
-    @When("I list all of role objects")
-    public void when_i_list_all_of_role_objects() {
+    @When("I list all of nutrient objects")
+    public void when_i_list_all_of_nutrient_objects() {
         response = RestAssured.
                 given().
                 contentType("application/json").
                 expect().
                 when().
-                get(serviceUrl("role/find")).
+                get(serviceUrl("nutrient/find")).
                 then().
                 extract().path("total");
     }
 
-    @When("I insert role object to database")
-    public void when_i_insert_role_object_to_database() {
+    @When("I insert nutrient object to database")
+    public void when_i_insert_nutrient_object_to_database() {
         response = RestAssured.
                 given().
                 contentType("application/json").
-                body(NutrixDataUtil.convertObjectToJson(roleObject)).
+                body(NutrixDataUtil.convertObjectToJson(nutrientObject)).
                 when().
-                post(serviceUrl("role/crud"));
+                post(serviceUrl("nutrient/crud"));
     }
 
-    @When("I update role object to database")
-    public void when_i_update_role_object_to_database() {
+    @When("I update nutrient object to database")
+    public void when_i_update_nutrient_object_to_database() {
         response = RestAssured.
                 given().
                 contentType("application/json").
-                body(NutrixDataUtil.convertObjectToJson(roleObject)).
+                body(NutrixDataUtil.convertObjectToJson(nutrientObject)).
                 when().
-                put(serviceUrl("role/crud/" + roleObject.getId()));
+                put(serviceUrl("nutrient/crud/" + nutrientObject.getId()));
     }
 
-    @When("I delete role object from database")
-    public void when_i_delete_role_object_from_database() {
+    @When("I delete nutrient object from database")
+    public void when_i_delete_nutrient_object_from_database() {
         response = RestAssured.
                 given().
                 contentType("application/json").
                 when().
-                delete(serviceUrl("role/crud/" + roleObject.getId()));
+                delete(serviceUrl("nutrient/crud/" + nutrientObject.getId()));
     }
 
-    @Then("role object should be insert successful")
+    @Then("nutrient object should be insert successful")
     public void thenNutrientObjectShouldBeInsertSuccessful() {
         Assert.assertTrue(response.getStatusCode() == 200);
 
         String responseBody = response.getBody().asString();
         JsonPath jsonPath = new JsonPath(responseBody);
 
-        Assert.assertTrue(NutrixDataUtil.verifyUUID(jsonPath.getString("id")));
-        Assert.assertEquals(roleObject.getName(), jsonPath.getString("name"));
-        Assert.assertEquals(roleObject.getCode(), jsonPath.getString("code"));
-        Assert.assertEquals(roleObject.getDescription(), jsonPath.getString("description"));
+        //Assert.assertTrue(NutrixDataUtil.verifyUUID(jsonPath.getString("id")));
+        Assert.assertEquals(nutrientObject.getName(), jsonPath.getString("name"));
+        Assert.assertEquals(nutrientObject.getCode(), jsonPath.getString("code"));
+        //Assert.assertEquals(nutrientObject.getDescription(), jsonPath.getString("description"));
     }
 
-    @Then("role object should not be inserted")
+    @Then("nutrient object should not be inserted")
     public void thenNutrientObjectShouldNotBeInserted() {
         Assert.assertTrue(response.getStatusCode() == NutrixConstants.ValidationFailedException_Code);
 
@@ -114,6 +118,6 @@ public class NutrixNutrientSteps extends NutrixAbstractSteps {
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Assert.assertTrue(NutrixConstants.ValidationFailedException_Code == jsonPath.getInt("code"));
-        //Assert.assertEquals(roleObject.getDescription(), jsonPath.getString("description"));
+        //Assert.assertEquals(nutrientObject.getDescription(), jsonPath.getString("description"));
     }
 }

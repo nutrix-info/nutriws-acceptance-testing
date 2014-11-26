@@ -17,7 +17,6 @@ Given a nutrient object with code:'<code>', name:'<name>', description:'<descrip
 When I insert nutrient object to database
 Then nutrient object should not be inserted
 Examples:
-|code                             |name       |description|
-|NUTRIENT#X                           ||200        |
-|ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567|Nutrient Y     |303        |
-
+|code                              |name           |description |
+|NUTRIENT#X                        |               |200         |
+|ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567 |Nutrient Y     |303         |
