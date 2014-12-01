@@ -37,14 +37,12 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
 
     @Given("a ingredient label:<label>")
     @Alias("a ingredient label: $label")
-
     public void given_a_ingredient_code(@Named("label") String label) {
         ingredientObject.setLabel(label);
     }
 
     @Given("a ingredient object with label:'<label>', description:'<description>'")
     @Alias("a ingredient object with label: '$label', description:'$description'")
-
     public void given_a_ingredient_object(@Named("label") String label, @Named("description") String description) {
         ingredientObject.setLabel(label);
         ingredientObject.setDescription(description);
@@ -59,12 +57,9 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
                 get(serviceUrl("ingredient/find")).
                 then().
                 extract().path("total"); //extract de lam gi vay a
-        // hàm extract() chuyển kết quả trả lại thành đối tượng dạng XML Object, để có thể
-        // dùng path() đọc (theo ngôn ngữ XPath - chỗ này không chắc lắm)
     }
 
     @When("I insert ingredient object to database")
-
     public void when_i_insert_ingredient_object_to_database() {
         response = RestAssured.
                 given().
@@ -75,7 +70,6 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
     }
 
     @When("I update ingredient object to database")
-
     public void when_i_update_ingredient_object_to_database() {
         response = RestAssured.
                 given().
@@ -86,7 +80,6 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
     }
 
     @When("I delete ingredient object to database")
-
     public void when_i_delete_ingredient_object_to_database() {
         response = RestAssured.
                 given().
@@ -96,7 +89,6 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
     }
 
     @Then("ingredient object should be insert succesful")
-
     public void thenIngredientObjectShouldBeInsertSuccessful() {
         Assert.assertTrue(response.getStatusCode() == 200);
 
@@ -104,9 +96,7 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Assert.assertTrue(NutrixDataUtil.verifyUUID(jsonPath.getString("id")));
-        Assert.assertEquals(ingredientObject.getLabel(), jsonPath.getString("label")); // cho nay minh so sanh chuoi phai khong thay
-        // đúng rồi ; thực ra, assertEquals cho phép so sánh 2 object với nhau.
-        // trong truonwgf hợp này, 2 hàm getLabel() va getString("label") để trả lại object là String
+        Assert.assertEquals(ingredientObject.getLabel(), jsonPath.getString("label"));
         Assert.assertEquals(ingredientObject.getDescription(), jsonPath.getString("description"));
     }
 
@@ -121,17 +111,3 @@ public class NutrixIngredientSteps extends NutrixAbstractSteps {
         Assert.assertTrue(NutrixConstants.ValidationFailedException_Code == jsonPath.getInt("label"));
     }
 }
-// bay gio em lam gi tiep theo a
-// cái khung này em nắm vũng vào hiểu mục đích của nó, chưa viết thêm gì nữa,
-// tạm gác lại.
-
-// bây giờ em chọn các (khoảng 3) User Stories để cài đặt theo các bước Unit Testing
-// trong phần dự án Cokkee Nutrix Core
-
-// Tập trung vào cái đó, xong rồi viết tiếp Acceptance Test
-// cứ qua lại như vậy để implementation dần dần tính năng
-
-// em mở lại dự án Core
-// la cai dat theo karma,... ben angular hay la cai giống hồi hè thầy
-
-// làm theo hồi hè, mình đang viết web service mà
